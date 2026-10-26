@@ -88,16 +88,17 @@ body {
 .guard-toggle input:focus-visible + .switch { outline: 3px solid var(--wb-cyan); outline-offset: 2px; }
 .guard-state { font-weight: 700; min-width: 2ch; }
 
-/* Three-panel app */
+/* Single chat column */
 .app {
     flex: 1;
     min-height: 0;
-    display: grid;
-    grid-template-columns: 280px minmax(0, 1fr) 300px;
-    gap: 1rem;
+    display: flex;
+    justify-content: center;
     padding: 1rem;
 }
-.panel, .chat-container {
+.chat-container {
+    width: 100%;
+    max-width: 860px;
     background: #fff;
     border-radius: var(--radius);
     box-shadow: 0 8px 30px rgba(21, 19, 63, 0.08);
@@ -106,40 +107,6 @@ body {
     flex-direction: column;
     overflow: hidden;
 }
-.panel { padding: 1rem; gap: 0.5rem; }
-.panel-title {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--wb-navy);
-}
-.panel-hint { font-size: 0.8rem; color: var(--wb-slate); }
-.panel-scroll { flex: 1; min-height: 0; overflow-y: auto; padding-right: 4px; }
-
-/* Scenarios */
-.scenario-group { margin-top: 0.75rem; }
-.scenario-group h3 { font-size: 0.78rem; font-weight: 600; color: var(--wb-deep); margin-bottom: 0.35rem; }
-.scenario {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    text-align: left;
-    font: inherit;
-    font-size: 0.82rem;
-    padding: 0.5rem 0.65rem;
-    margin-bottom: 0.35rem;
-    border: 1px solid var(--wb-mist);
-    border-radius: 8px;
-    background: var(--wb-offwhite);
-    color: var(--wb-ink);
-    cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
-}
-.scenario:hover { border-color: var(--wb-navy); background: #fff; }
-.scenario:focus-visible { outline: 3px solid var(--wb-cyan); outline-offset: 1px; }
 
 /* Status pills */
 .pill {
@@ -157,7 +124,6 @@ body {
 .pill-redacted { background: #e6f5f8; color: #1d7486; }
 .pill-blocked { background: #fbe5e5; color: var(--wb-red); }
 .pill-off { background: var(--wb-red); color: #fff; }
-.pill-id { background: var(--wb-mist); color: var(--wb-navy); }
 
 /* Chat */
 .chat-head {
@@ -207,6 +173,7 @@ body {
     word-wrap: break-word;
     font-size: 0.92rem;
 }
+.message-reason { font-size: 0.75rem; color: var(--wb-slate); }
 .message-note { font-size: 0.75rem; color: #1d7486; font-style: italic; }
 .chat-message.user { align-self: flex-end; align-items: flex-end; }
 .chat-message.user .message-body { background: var(--wb-navy); color: #fff; border-bottom-right-radius: 4px; }
@@ -237,36 +204,6 @@ body {
 .chat-form button:active { transform: scale(0.97); }
 .chat-form button:focus-visible { outline: 3px solid var(--wb-cyan); outline-offset: 2px; }
 
-/* Inspector: trace + policies */
-.trace { padding-bottom: 0.5rem; border-bottom: 1px solid var(--wb-mist); margin-bottom: 0.25rem; }
-.trace-status { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
-.trace-layer { font-size: 0.75rem; color: var(--wb-slate); }
-.trace-steps { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 0.4rem; }
-.trace-step {
-    display: flex; justify-content: space-between; gap: 0.5rem;
-    font-size: 0.78rem; padding: 0.3rem 0.55rem; border-radius: 6px; background: var(--wb-offwhite);
-}
-.step-name { font-weight: 600; color: var(--wb-deep); }
-.step-result { color: var(--wb-slate); text-align: right; }
-.result-blocked .step-result { color: var(--wb-red); font-weight: 600; }
-.result-safeguarded .step-result, .result-redacted .step-result { color: var(--warn); font-weight: 600; }
-.result-skipped .step-result { color: var(--wb-red); }
-.trace-reason { display: flex; flex-direction: column; font-size: 0.76rem; margin-top: 0.35rem; }
-.trace-reason strong { color: var(--wb-deep); }
-.trace-reason span { color: var(--wb-slate); }
-
-.policy {
-    padding: 0.55rem 0.65rem; margin-bottom: 0.4rem;
-    border: 1px solid var(--wb-mist); border-radius: 8px;
-    transition: border-color 0.2s, background 0.2s;
-}
-.policy.fired { border-color: var(--wb-navy); background: #f1f2fb; }
-.policy-top { display: flex; justify-content: space-between; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
-.policy-id { color: var(--wb-navy); }
-.policy-principle { color: var(--wb-slate); }
-.policy h3 { font-size: 0.82rem; font-weight: 600; color: var(--wb-deep); margin: 0.1rem 0; }
-.policy p { font-size: 0.74rem; color: var(--wb-slate); line-height: 1.4; }
-
 /* Typing indicator */
 .typing-dots { display: inline-flex; gap: 4px; padding: 4px 0; }
 .typing-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--wb-lavender); animation: dotPulse 1.2s infinite ease-in-out; }
@@ -276,8 +213,8 @@ body {
 @keyframes rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 /* Scrollbars */
-.chat-log::-webkit-scrollbar, .panel-scroll::-webkit-scrollbar { width: 6px; }
-.chat-log::-webkit-scrollbar-thumb, .panel-scroll::-webkit-scrollbar-thumb { background: var(--wb-lavender); border-radius: 3px; }
+.chat-log::-webkit-scrollbar { width: 6px; }
+.chat-log::-webkit-scrollbar-thumb { background: var(--wb-lavender); border-radius: 3px; }
 
 /* Footer with collaboration credit (white, so the partner logo reads correctly) */
 .site-footer {
@@ -299,22 +236,15 @@ body {
 .collab span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
 .uhas-logo { height: 36px; width: auto; display: block; }
 
-/* Smaller laptops: drop the policy list to save room, keep the trace */
-@media (max-width: 1180px) {
-    .app { grid-template-columns: 240px minmax(0, 1fr) 260px; gap: 0.75rem; padding: 0.75rem; }
-    .header-title h1 { font-size: 1.05rem; }
-}
 /* Tablets and phones: stack panels and allow page scroll */
 @media (max-width: 900px) {
-    body { overflow: auto; height: auto; }
-    .app { display: flex; flex-direction: column; }
-    .chat-container { order: -1; height: 70vh; }
-    .panel { max-height: 50vh; }
+    .app { padding: 0.5rem; }
     .header-title { display: none; }
     .site-header { justify-content: space-between; }
-    .site-footer { height: auto; padding: 0.75rem 1rem; flex-direction: column; text-align: center; }
+    .site-footer { height: auto; padding: 0.5rem 1rem; flex-direction: column; gap: 0.25rem; text-align: center; }
     .talk { white-space: normal; }
     .chat-message { max-width: 92%; }
+    .chat-form button span { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }

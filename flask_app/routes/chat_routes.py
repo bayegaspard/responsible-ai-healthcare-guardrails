@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 import ollama
 from nemoguardrails import LLMRails, RailsConfig
 
-from policies import POLICIES, SCENARIOS, SYSTEM_PROMPT, evaluate
+from policies import SYSTEM_PROMPT, evaluate
 
 log = logging.getLogger(__name__)
 
@@ -40,7 +40,7 @@ def nemo_input_blocked(message):
 
 @chat_bp.route('/')
 def index():
-    return render_template('chat.html', policies=POLICIES, scenarios=SCENARIOS)
+    return render_template('chat.html')
 
 
 @chat_bp.route('/chat', methods=['GET', 'POST'])
