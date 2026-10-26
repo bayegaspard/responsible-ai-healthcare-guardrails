@@ -1,7 +1,9 @@
 <p align="center">
-  <img src="app/static/images/logo.png" alt="WallBridge AI" height="60">
+  <a href="https://www.wallbridge.ai"><img src="app/static/images/logo.png" alt="WallBridge AI" height="56"></a>
   &nbsp;&nbsp;&nbsp;
-  <img src="app/static/images/uhas-logo.png" alt="University of Health and Allied Sciences, Ho" height="60">
+  <a href="https://www.valix.ai"><img src="app/static/images/valix-logo.svg" alt="Valix AI" height="56"></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.uhas.edu.gh"><img src="app/static/images/uhas-logo.png" alt="University of Health and Allied Sciences, Ho" height="56"></a>
 </p>
 
 <h1 align="center">Responsible AI in Healthcare: Guardrails Demo</h1>
@@ -9,7 +11,8 @@
 <p align="center">
   A clinical AI chatbot with a <b>Guardrails On/Off</b> switch, so you can see what safety rules change.<br>
   A live demo for the talk <i>Navigating AI Research Risk and Responsibility in Healthcare</i>,<br>
-  in collaboration with the University of Health and Allied Sciences, Ho.
+  by <a href="https://www.wallbridge.ai">WallBridge AI</a> and <a href="https://www.valix.ai">Valix AI</a>,
+  in collaboration with the <a href="https://www.uhas.edu.gh">University of Health and Allied Sciences, Ho</a>.
 </p>
 
 <p align="center">
@@ -43,6 +46,14 @@ It has one important switch, **Guardrails**:
 - **Guardrails Off.** The message goes straight to the raw AI model with no checks, so you can compare.
 
 > **Guardrails** are safety rules placed around an AI model. They check what goes in and shape what comes out.
+
+## Partners
+
+| | Partner | Website |
+|:---:|---|---|
+| <img src="app/static/images/logo.png" alt="WallBridge AI" height="32"> | **WallBridge AI**, AI strategy for leadership teams | [wallbridge.ai](https://www.wallbridge.ai) |
+| <img src="app/static/images/valix-logo.svg" alt="Valix AI" height="32"> | **Valix AI**, AI security for regulated organizations | [valix.ai](https://www.valix.ai) |
+| <img src="app/static/images/uhas-logo.png" alt="UHAS" height="32"> | **University of Health and Allied Sciences, Ho** | [uhas.edu.gh](https://www.uhas.edu.gh) |
 
 ## Tools used
 

@@ -258,9 +258,12 @@ body {
 }
 .talk { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .talk em { color: var(--wb-deep); font-style: normal; font-weight: 600; }
-.collab { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+.collab { display: flex; align-items: center; gap: 0.9rem; flex-shrink: 0; }
 .collab span { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
 .uhas-logo { height: 36px; width: auto; display: block; }
+.valix-logo { height: 32px; width: auto; display: block; }
+.collab a { display: inline-flex; border-radius: 6px; }
+.collab a:focus-visible { outline: 3px solid var(--wb-cyan); outline-offset: 2px; }
 
 /* Tablets and phones: stack panels and allow page scroll */
 @media (max-width: 900px) {
@@ -269,6 +272,7 @@ body {
     .site-header { justify-content: space-between; }
     .site-footer { height: auto; padding: 0.5rem 1rem; flex-direction: column; gap: 0.25rem; text-align: center; }
     .talk { white-space: normal; }
+    .collab { flex-wrap: wrap; justify-content: center; }
     .chat-message { max-width: 92%; }
     .chat-form button span { display: none; }
 }

@@ -11,7 +11,7 @@
 </head>
 <body>
     <header class="site-header">
-        <a href="{{ url_for('chat.index') }}" class="brand" aria-label="WallBridge AI home">
+        <a href="https://www.wallbridge.ai" class="brand" target="_blank" rel="noopener" aria-label="WallBridge AI website">
             <img src="{{ url_for('static', filename='images/logo.png') }}" alt="WallBridge AI" class="logo">
         </a>
         <div class="header-title">
@@ -34,7 +34,12 @@
         <p class="talk">Demo for <em>Navigating AI Research Risk and Responsibility in Healthcare</em></p>
         <div class="collab">
             <span>In collaboration with</span>
-            <img src="{{ url_for('static', filename='images/uhas-logo.png') }}" alt="University of Health and Allied Sciences, Ho" class="uhas-logo">
+            <a href="https://www.valix.ai" target="_blank" rel="noopener" aria-label="Valix AI website">
+                <img src="{{ url_for('static', filename='images/valix-logo.svg') }}" alt="Valix AI" class="valix-logo">
+            </a>
+            <a href="https://www.uhas.edu.gh" target="_blank" rel="noopener" aria-label="University of Health and Allied Sciences, Ho website">
+                <img src="{{ url_for('static', filename='images/uhas-logo.png') }}" alt="University of Health and Allied Sciences, Ho" class="uhas-logo">
+            </a>
         </div>
     </footer>
 </body>
