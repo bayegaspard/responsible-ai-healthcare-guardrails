@@ -126,6 +126,11 @@ footer { margin-top: 5rem; background: #fff; border-top: 1px solid var(--mist); 
 footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: 1.25rem; padding-bottom: 1.25rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--slate); }
 footer img { height: 40px; display: block; }
 footer .c2 { display: flex; align-items: center; gap: 0.6rem; }
+.collab a, footer .c2 a { display: inline-flex; }
+.collab img.valix, footer img.valix { height: 34px; }
+footer .c2 { flex-wrap: wrap; }
+footer .c2 .wb { background: #060620; border-radius: 8px; padding: 4px 8px; }
+footer .c2 .wb img { height: 30px; }
 footer .c2 span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 
 @media (max-width: 900px) {
@@ -146,7 +151,7 @@ footer .c2 span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; t
 <body>
 <nav>
   <div class="wrap">
-    <img src="assets/wallbridge-logo.png" alt="WallBridge AI">
+    <a href="https://www.wallbridge.ai" aria-label="WallBridge AI website"><img src="assets/wallbridge-logo.png" alt="WallBridge AI"></a>
     <div class="links">
       <a href="#how">How it works</a>
       <a href="#policies">Policies</a>
@@ -160,14 +165,15 @@ footer .c2 span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; t
   <div class="wrap">
     <span class="eyebrow">Live demo · Responsible AI in Healthcare</span>
     <h1>Guardrails that put the safeguard in the same hand as the capability.</h1>
-    <p class="lead">A clinical AI assistant that checks every request against healthcare policies before a model answers. It's built as a live demo for the talk <em>Navigating AI Research Risk and Responsibility in Healthcare</em>.</p>
+    <p class="lead">A clinical AI assistant that checks every request against healthcare policies before a model answers. It's built as a live demo for the talk <em>Navigating AI Research Risk and Responsibility in Healthcare</em>, by <a href="https://www.wallbridge.ai" style="color:#fff">WallBridge AI</a> and <a href="https://www.valix.ai" style="color:#fff">Valix AI</a>.</p>
     <div class="cta">
       <a class="btn btn-primary" href="#try">Try the policy engine</a>
       <a class="btn btn-ghost" href="https://github.com/bayegaspard/responsible-ai-healthcare-guardrails">View the source</a>
     </div>
     <div class="collab">
       <span>In collaboration with</span>
-      <img src="assets/uhas-logo.png" alt="University of Health and Allied Sciences, Ho">
+      <a href="https://www.valix.ai" aria-label="Valix AI website"><img src="assets/valix-logo.svg" alt="Valix AI" class="valix"></a>
+      <a href="https://www.uhas.edu.gh" aria-label="University of Health and Allied Sciences, Ho website"><img src="assets/uhas-logo.png" alt="University of Health and Allied Sciences, Ho"></a>
     </div>
   </div>
 </header>
@@ -257,7 +263,10 @@ powershell -ExecutionPolicy Bypass -File scripts\run.ps1</pre>
 <footer>
   <div class="wrap">
     <p>Demo for <em>Navigating AI Research Risk and Responsibility in Healthcare</em>.</p>
-    <div class="c2"><span>In collaboration with</span><img src="assets/uhas-logo.png" alt="University of Health and Allied Sciences, Ho"></div>
+    <div class="c2"><span>Partners</span>
+      <a href="https://www.wallbridge.ai" aria-label="WallBridge AI website" class="wb"><img src="assets/wallbridge-logo.png" alt="WallBridge AI"></a>
+      <a href="https://www.valix.ai" aria-label="Valix AI website"><img src="assets/valix-logo.svg" alt="Valix AI" class="valix"></a>
+      <a href="https://www.uhas.edu.gh" aria-label="University of Health and Allied Sciences, Ho website"><img src="assets/uhas-logo.png" alt="University of Health and Allied Sciences, Ho"></a></div>
   </div>
 </footer>
 
