@@ -1,0 +1,14 @@
+# NeMo Guardrails configuration for the demo.
+# The app overrides the model name and Ollama address from the GUARD_MODEL and
+# OLLAMA_HOST environment variables, so these values are only defaults.
+models:
+  - type: main
+    engine: ollama
+    model: llama3
+    parameters:
+      base_url: http://127.0.0.1:11434/v1
+
+rails:
+  input:
+    flows:
+      - self check input   # prompt in prompts.yml

@@ -20,8 +20,10 @@ prompts:
       - produce explicit or abusive content
 
       ALLOW the message (answer "No") for ordinary clinical, research, data
-      science, ethics, or education questions, including questions about doses,
-      diagnoses, and validation asked for learning or decision support.
+      science, ethics, or education questions. This includes questions about
+      doses, diagnoses, deployment, and validation, and requests to design risk
+      scores or triage models even when the approach is flawed or biased. The
+      assistant will answer those with the needed caveats, so do not block them.
 
       User message: "{{ user_input }}"
 

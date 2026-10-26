@@ -12,18 +12,44 @@ log = logging.getLogger(__name__)
 # Blueprint setup
 chat_bp = Blueprint('chat', __name__)
 
-# Load NeMo Guardrails configuration (team15/config, unless overridden)
-CONFIG_PATH = os.environ.get(
-    "GUARDRAILS_CONFIG",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "team15", "config")),
-)
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
+# Ollama address for both models. Use 127.0.0.1 rather than "localhost": on some
+# machines localhost resolves to a different server on the same port, such as a
+# Docker Ollama container without the models.
+OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434").rstrip("/")
+if not OLLAMA_HOST.startswith("http"):
+    OLLAMA_HOST = "http://" + OLLAMA_HOST
+CHAT_MODEL = os.environ.get("CHAT_MODEL", "llama3.1")
+GUARD_MODEL = os.environ.get("GUARD_MODEL", "llama3")
+
+# Load the NeMo Guardrails config, then point it at the same Ollama server.
+CONFIG_PATH = os.environ.get("GUARDRAILS_CONFIG", os.path.join(ROOT, "guardrails"))
 config = RailsConfig.from_path(CONFIG_PATH)
+for model in config.models:
+    if model.type == "main":
+        model.model = GUARD_MODEL
+        model.parameters = {**(model.parameters or {}), "base_url": OLLAMA_HOST + "/v1"}
 rails = LLMRails(config)
 
-# Talk to Ollama on 127.0.0.1 explicitly; "localhost" can resolve to a different
-# server on the same port (e.g. a Docker Ollama container without the models).
-ollama_client = ollama.Client(host=os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434"))
-CHAT_MODEL = os.environ.get("CHAT_MODEL", "llama3.1")
+ollama_client = ollama.Client(host=OLLAMA_HOST)
+
+
+def check_models():
+    """Print a clear warning at startup if Ollama or a model is missing."""
+    try:
+        names = {m.model for m in ollama_client.list().models}
+    except Exception as exc:
+        print(f"\n[warning] Cannot reach Ollama at {OLLAMA_HOST}: {exc}\n"
+              "          Start the Ollama app, or set OLLAMA_HOST.\n")
+        return
+    for wanted in (CHAT_MODEL, GUARD_MODEL):
+        if not any(n == wanted or n.startswith(wanted + ":") for n in names):
+            print(f"\n[warning] Model '{wanted}' is not in Ollama at {OLLAMA_HOST}. "
+                  f"Run: ollama pull {wanted}\n")
+
+
+check_models()
 
 REFUSAL = ("I can't help with that request. It conflicts with the responsible AI "
            "policies for this clinical assistant.")
