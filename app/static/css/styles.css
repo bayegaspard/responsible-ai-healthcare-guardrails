@@ -46,7 +46,7 @@ body {
     color: #fff;
 }
 .brand { display: inline-flex; flex-shrink: 0; }
-.logo { height: 40px; width: auto; display: block; }
+.logo { height: 28px; width: auto; display: block; }
 .header-title { flex: 1; min-width: 0; }
 .eyebrow {
     display: block;
