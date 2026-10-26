@@ -1,8 +1,8 @@
-### Responsible AI in Healthcare: Guardrails Demo
+### Responsible AI in Healthcare: Guardrails Demo (responsible-ai-healthcare-guardrails)
 
 A clinical AI assistant that checks every request against healthcare policies before a local model answers. It's a live demo for the talk *Navigating AI Research Risk and Responsibility in Healthcare*, in collaboration with the University of Health and Allied Sciences, Ho.
 
-Project page: https://bayegaspard.github.io/LauchAthon-team15/
+Project page: https://bayegaspard.github.io/responsible-ai-healthcare-guardrails/
 
 #### How it works
 1. **Policy engine** ([flask_app/policies.py](flask_app/policies.py)). Deterministic rules mapped to the talk's four principles block, redact, or attach a required safeguard.
