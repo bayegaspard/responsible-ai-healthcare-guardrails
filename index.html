@@ -240,19 +240,17 @@ footer .c2 span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; t
   <section class="block" id="run">
     <span class="eyebrow">Run locally</span>
     <h2>Run the full demo with a local model</h2>
-    <p class="intro">The full app needs Python and <a href="https://ollama.com">Ollama</a>. It runs entirely on your machine.</p>
-<pre class="cmd"><span class="c"># 1. Get the code and install dependencies</span>
+    <p class="intro">The full app needs Python 3.10 or newer and <a href="https://ollama.com/download">Ollama</a>. It runs entirely on your machine on macOS, Linux, or Windows.</p>
+<pre class="cmd"><span class="c"># macOS or Linux</span>
 git clone https://github.com/bayegaspard/responsible-ai-healthcare-guardrails.git
 cd responsible-ai-healthcare-guardrails
-pip install flask ollama nemoguardrails
+./scripts/setup.sh      <span class="c"># one time: packages, models (about 10 GB), tests</span>
+./scripts/run.sh        <span class="c"># then open http://127.0.0.1:5050</span>
 
-<span class="c"># 2. Pull the models (about 10 GB)</span>
-ollama pull llama3       <span class="c"># guardrail self-check</span>
-ollama pull llama3.1     <span class="c"># assistant</span>
-
-<span class="c"># 3. Start the app, then open http://127.0.0.1:5050</span>
-cd flask_app
-python3 app.py</pre>
+<span class="c"># Windows (PowerShell)</span>
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
+powershell -ExecutionPolicy Bypass -File scriptsun.ps1</pre>
+<p class="intro" style="margin-top:1rem">Full steps, settings, and troubleshooting are in the <a href="https://github.com/bayegaspard/responsible-ai-healthcare-guardrails#readme">README</a>.</p>
   </section>
 </div>
 
