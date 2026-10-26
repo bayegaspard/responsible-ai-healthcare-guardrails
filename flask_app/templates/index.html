@@ -1,17 +1,67 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="chat-container">
-    <div id="chat-log" class="chat-log"></div>
-    <form id="chat-form" method="POST" action="/chat">
-        <input type="text" id="user-message" name="message" placeholder="Type your message..." required>
-        <button type="submit">
+<aside class="panel scenarios" aria-label="Demo scenarios">
+    <h2 class="panel-title">Demo scenarios</h2>
+    <p class="panel-hint">Click one to send it. Try each with guardrails on, then off.</p>
+    <div class="panel-scroll">
+        {% for group in scenarios %}
+        <div class="scenario-group">
+            <h3>{{ group.group }}</h3>
+            {% for s in group['items'] %}
+            <button type="button" class="scenario" data-prompt="{{ s.prompt }}">
+                <span class="scenario-label">{{ s.label }}</span>
+                <span class="pill pill-{{ s.expect }}">{{ s.expect }}</span>
+            </button>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</aside>
+
+<section class="chat-container" aria-label="Chat">
+    <div class="chat-head">
+        <span class="status-dot" id="status-dot" aria-hidden="true"></span>
+        <div>
+            <h2>WallBridge Clinical Assistant</h2>
+            <p id="mode-note">Guardrails on: policy engine, NeMo self-check, then the model.</p>
+        </div>
+        <button type="button" class="clear-btn" id="clear-chat">Clear</button>
+    </div>
+    <div id="chat-log" class="chat-log" aria-live="polite">
+        <div class="empty-state" id="empty-state">
+            <p>Pick a scenario on the left or type your own question.</p>
+        </div>
+    </div>
+    <form id="chat-form" class="chat-form" method="POST" action="/chat">
+        <input type="text" id="user-message" name="message" placeholder="Ask a clinical or research question..." autocomplete="off" required>
+        <button type="submit" aria-label="Send message">
             <span>Send</span>
-            <svg viewBox="0 0 24 24" width="24" height="24">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
                 <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
             </svg>
         </button>
     </form>
-</div>
+</section>
+
+<aside class="panel inspector" aria-label="Guardrail decision and policies">
+    <h2 class="panel-title">Guardrail decision</h2>
+    <div id="trace" class="trace">
+        <p class="panel-hint">Send a message to see how each layer handled it.</p>
+    </div>
+    <h2 class="panel-title">Active policies</h2>
+    <div class="panel-scroll">
+        {% for p in policies %}
+        <div class="policy" id="policy-{{ p.id }}">
+            <div class="policy-top">
+                <span class="policy-id">{{ p.id }}</span>
+                <span class="policy-principle">{{ p.principle }}</span>
+            </div>
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.summary }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</aside>
 <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 {% endblock %}

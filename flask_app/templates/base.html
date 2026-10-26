@@ -3,22 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAFAI</title>
+    <title>WallBridge AI | Responsible AI in Healthcare Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="SafAI Logo" class="logo">
-            <span class="tagline">Safety is our priority!</span>
+    <header class="site-header">
+        <a href="{{ url_for('chat.index') }}" class="brand" aria-label="WallBridge AI home">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="WallBridge AI" class="logo">
+        </a>
+        <div class="header-title">
+            <span class="eyebrow">Live demo</span>
+            <h1>Responsible AI in Healthcare</h1>
         </div>
+        <label class="guard-toggle" title="Switch guardrails on or off for the next message">
+            <span class="guard-label">Guardrails</span>
+            <input type="checkbox" id="guardrails-toggle" checked>
+            <span class="switch" aria-hidden="true"></span>
+            <span class="guard-state" id="guard-state">On</span>
+        </label>
     </header>
-    <main>
+
+    <main class="app">
         {% block content %}{% endblock %}
     </main>
-    <footer>
-        <p>&copy; 2024 SAFAI</p>
+
+    <footer class="site-footer">
+        <p class="talk">Demo for <em>Navigating AI Research Risk and Responsibility in Healthcare</em></p>
+        <div class="collab">
+            <span>In collaboration with</span>
+            <img src="{{ url_for('static', filename='images/uhas-logo.png') }}" alt="University of Health and Allied Sciences, Ho" class="uhas-logo">
+        </div>
     </footer>
 </body>
 </html>

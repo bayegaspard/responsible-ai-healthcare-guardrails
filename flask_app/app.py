@@ -7,4 +7,6 @@ app = Flask(__name__)
 app.register_blueprint(chat_bp)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Port 5000 is taken by macOS AirPlay Receiver, which answers with HTTP 403.
+    import os
+    app.run(debug=True, port=int(os.environ.get("PORT", 5050)))
