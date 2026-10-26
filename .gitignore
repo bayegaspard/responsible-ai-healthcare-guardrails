@@ -1,0 +1,15 @@
+# OS and editor files
+.DS_Store
+.history/
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Office files and lock files
+~$*
+*.pptx

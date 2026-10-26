@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="chat-container" aria-label="Chat">
+    <div class="chat-head">
+        <span class="status-dot" id="status-dot" aria-hidden="true"></span>
+        <div>
+            <h2>WallBridge Clinical Assistant</h2>
+            <p id="mode-note">Guardrails on: policy engine, NeMo self-check, then the model.</p>
+        </div>
+        <button type="button" class="clear-btn" id="clear-chat">Clear</button>
+    </div>
+    <div id="chat-log" class="chat-log" aria-live="polite">
+        <div class="empty-state" id="empty-state">
+            <p>Ask anything. Toggle guardrails to compare.</p>
+        </div>
+    </div>
+    <form id="chat-form" class="chat-form" method="POST" action="/chat">
+        <input type="text" id="user-message" name="message" placeholder="Ask a clinical or research question..." autocomplete="off" required autofocus>
+        <button type="submit" aria-label="Send message">
+            <span>Send</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+            </svg>
+        </button>
+    </form>
+</section>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}
