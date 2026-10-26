@@ -19,7 +19,25 @@ function el(tag, className, text) {
     return node;
 }
 
-// All message text goes through textContent so it is never parsed as HTML.
+// Model replies are Markdown. Render them with the bundled marked library and
+// sanitize the HTML with DOMPurify. Everything else stays plain text.
+const canRenderMarkdown = typeof marked !== "undefined" && typeof DOMPurify !== "undefined";
+if (canRenderMarkdown) marked.setOptions({ gfm: true, breaks: false });
+
+function renderMarkdown(target, text) {
+    // Ollama often indents sub-bullets with tabs; normalize them to spaces.
+    const source = text.replace(/\t/g, "    ");
+    target.innerHTML = DOMPurify.sanitize(marked.parse(source), {
+        FORBID_TAGS: ["style", "img", "iframe", "form", "input"],
+    });
+    target.querySelectorAll("a").forEach((a) => {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+    });
+    target.classList.add("markdown");
+}
+
+// User text and errors go through textContent so they are never parsed as HTML.
 function addMessage(role, text, opts = {}) {
     document.getElementById("empty-state")?.remove();
     const msg = el("div", `chat-message ${role}` + (opts.extraClass ? ` ${opts.extraClass}` : ""));
@@ -27,7 +45,10 @@ function addMessage(role, text, opts = {}) {
     head.append(el("span", "message-label", role === "user" ? "You" : "WallBridge AI"));
     if (opts.status) head.append(el("span", `pill pill-${opts.status}`, STATUS_LABEL[opts.status]));
     const body = el("div", "message-body");
-    if (text !== null) body.textContent = text;
+    if (text !== null) {
+        if (opts.markdown && canRenderMarkdown) renderMarkdown(body, text);
+        else body.textContent = text;
+    }
     msg.append(head, body);
     if (opts.reason) msg.append(el("div", "message-reason", opts.reason));
     if (opts.note) msg.append(el("div", "message-note", opts.note));
@@ -74,6 +95,7 @@ async function send(userMessage) {
             reason: p ? `${p.id} · ${p.reason}` : undefined,
             note: d.redactions && d.redactions.length ? "Sent to the model as: " + d.message : undefined,
             extraClass: d.status === "blocked" ? "blocked" : (d.status === "off" ? "unguarded" : ""),
+            markdown: true,
         });
     } catch (error) {
         loading.remove();
