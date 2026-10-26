@@ -1,5 +1,8 @@
 <p align="center">
-  <a href="https://www.wallbridge.ai"><img src="app/static/images/logo.png" alt="WallBridge AI" height="56"></a>
+  <a href="https://www.wallbridge.ai"><picture>
+    <source media="(prefers-color-scheme: dark)" srcset="app/static/images/wallbridge-logo.svg">
+    <img src="app/static/images/wallbridge-logo-dark.svg" alt="WallBridge AI" height="40">
+  </picture></a>
   &nbsp;&nbsp;&nbsp;
   <a href="https://www.valix.ai"><img src="app/static/images/valix-logo.svg" alt="Valix AI" height="56"></a>
   &nbsp;&nbsp;&nbsp;
@@ -51,7 +54,7 @@ It has one important switch, **Guardrails**:
 
 | | Partner | Website |
 |:---:|---|---|
-| <img src="app/static/images/logo.png" alt="WallBridge AI" height="32"> | **WallBridge AI**, AI strategy for leadership teams | [wallbridge.ai](https://www.wallbridge.ai) |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="app/static/images/wallbridge-logo.svg"><img src="app/static/images/wallbridge-logo-dark.svg" alt="WallBridge AI" height="26"></picture> | **WallBridge AI**, AI strategy for leadership teams | [wallbridge.ai](https://www.wallbridge.ai) |
 | <img src="app/static/images/valix-logo.svg" alt="Valix AI" height="32"> | **Valix AI**, AI security for regulated organizations | [valix.ai](https://www.valix.ai) |
 | <img src="app/static/images/uhas-logo.png" alt="UHAS" height="32"> | **University of Health and Allied Sciences, Ho** | [uhas.edu.gh](https://www.uhas.edu.gh) |
 

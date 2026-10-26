@@ -8,11 +8,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
 </head>
 <body>
     <header class="site-header">
         <a href="https://www.wallbridge.ai" class="brand" target="_blank" rel="noopener" aria-label="WallBridge AI website">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="WallBridge AI" class="logo">
+            <img src="{{ url_for('static', filename='images/wallbridge-logo.svg') }}" alt="WallBridge AI" class="logo">
         </a>
         <div class="header-title">
             <span class="eyebrow">Live demo</span>
