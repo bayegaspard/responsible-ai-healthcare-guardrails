@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsible AI in Healthcare | Guardrails Demo</title>
+<meta name="description" content="A live guardrails demo for the talk Navigating AI Research Risk and Responsibility in Healthcare, in collaboration with the University of Health and Allied Sciences, Ho.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #3a3f92; --deep: #15133f; --night: #060620; --off: #f8f8fa; --mist: #ecedf4;
+  --lav: #999bc6; --slate: #6e6e80; --cyan: #7ccad9; --yellow: #eee867; --red: #c40909;
+  --ink: #1f1f1f; --ok: #1f8a5b; --warn: #b7791f; --radius: 14px;
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--font); background: var(--off); color: var(--ink); line-height: 1.6; }
+a { color: var(--navy); }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 1rem; }
+
+/* Nav */
+nav { background: var(--night); }
+nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 1rem; }
+nav img { height: 38px; display: block; }
+nav .links { display: flex; gap: 1.25rem; font-size: 0.88rem; }
+nav .links a { color: rgba(255,255,255,0.8); text-decoration: none; }
+nav .links a:hover { color: #fff; }
+
+/* Hero */
+.hero { color: #fff; padding: 4rem 0 7rem;
+  background: radial-gradient(circle at 85% 15%, rgba(124,202,217,0.28), transparent 45%),
+              linear-gradient(135deg, var(--night) 0%, var(--deep) 45%, var(--navy) 100%); }
+.eyebrow { color: var(--yellow); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; line-height: 1.12; margin: 0.75rem 0 1rem; max-width: 760px; }
+.hero p.lead { max-width: 620px; color: rgba(255,255,255,0.82); font-weight: 300; font-size: 1.05rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.4rem; border-radius: 999px;
+  font-weight: 600; text-decoration: none; font-size: 0.95rem; }
+.btn-primary { background: var(--cyan); color: var(--deep); }
+.btn-ghost { border: 1px solid rgba(255,255,255,0.35); color: #fff; }
+.btn:hover { filter: brightness(1.08); }
+.collab { display: inline-flex; align-items: center; gap: 0.75rem; margin-top: 2rem; background: #fff;
+  border-radius: 12px; padding: 0.5rem 0.9rem; }
+.collab span { color: var(--slate); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.collab img { height: 40px; display: block; }
+
+/* Screenshot */
+.shot { margin-top: -5rem; }
+.shot img { width: 100%; display: block; border-radius: var(--radius); box-shadow: 0 30px 60px rgba(21,19,63,0.25); border: 1px solid var(--mist); }
+.shot figcaption { text-align: center; color: var(--slate); font-size: 0.85rem; margin-top: 0.75rem; }
+
+section.block { padding: 4.5rem 0 0; }
+.block h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; color: var(--deep); margin: 0.35rem 0 0.75rem; }
+.block .intro { color: var(--slate); max-width: 680px; }
+.block .eyebrow { color: var(--navy); }
+
+/* Layers */
+.layers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 2rem; }
+.layer { background: #fff; border: 1px solid var(--mist); border-radius: var(--radius); padding: 1.25rem; position: relative; }
+.layer .num { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 700;
+  background: var(--navy); color: #fff; font-size: 0.9rem; margin-bottom: 0.75rem; }
+.layer.off .num { background: var(--red); }
+.layer h3 { font-size: 1rem; color: var(--deep); margin-bottom: 0.35rem; }
+.layer p { font-size: 0.88rem; color: var(--slate); }
+
+/* Policies */
+.policies { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+.policy { background: #fff; border: 1px solid var(--mist); border-radius: var(--radius); padding: 1.1rem 1.2rem; transition: border-color .2s, background .2s; }
+.policy.fired { border-color: var(--navy); background: #f1f2fb; }
+.policy .top { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.policy .id { color: var(--navy); }
+.policy .pr { color: var(--slate); }
+.policy h3 { font-size: 0.98rem; color: var(--deep); margin: 0.3rem 0; }
+.policy p { font-size: 0.86rem; color: var(--slate); }
+.policy .act { display: inline-block; margin-top: 0.6rem; }
+
+/* Pills */
+.pill { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 0.15rem 0.55rem; border-radius: 999px; white-space: nowrap; }
+.pill-allowed { background: #e3f4ec; color: var(--ok); }
+.pill-safeguarded { background: #fdf3dd; color: var(--warn); }
+.pill-redacted { background: #e6f5f8; color: #1d7486; }
+.pill-blocked { background: #fbe5e5; color: var(--red); }
+.pill-id { background: var(--mist); color: var(--navy); }
+
+/* Playground */
+.play { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 1rem; margin-top: 2rem; }
+.card { background: #fff; border: 1px solid var(--mist); border-radius: var(--radius); padding: 1.25rem; }
+.scen-group h4 { font-size: 0.78rem; color: var(--deep); margin: 0.75rem 0 0.35rem; }
+.scen-group:first-child h4 { margin-top: 0; }
+.scen { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; text-align: left;
+  font: inherit; font-size: 0.84rem; padding: 0.5rem 0.65rem; margin-bottom: 0.35rem; border: 1px solid var(--mist);
+  border-radius: 8px; background: var(--off); cursor: pointer; color: var(--ink); }
+.scen:hover { border-color: var(--navy); background: #fff; }
+.scen:focus-visible, textarea:focus-visible, .run:focus-visible { outline: 3px solid var(--cyan); outline-offset: 2px; }
+label.lbl { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); }
+textarea { width: 100%; min-height: 110px; margin: 0.5rem 0 0.75rem; font: inherit; font-size: 0.95rem; padding: 0.8rem 1rem;
+  border: 1px solid var(--mist); border-radius: 10px; background: var(--off); resize: vertical; color: var(--ink); }
+.run { font: inherit; font-weight: 600; padding: 0.65rem 1.3rem; border: none; border-radius: 999px; background: var(--navy); color: #fff; cursor: pointer; }
+.run:hover { background: var(--deep); }
+.result { margin-top: 1.25rem; border-top: 1px solid var(--mist); padding-top: 1rem; }
+.result .status { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; font-size: 0.9rem; }
+.reason { font-size: 0.88rem; margin-bottom: 0.4rem; }
+.reason strong { color: var(--deep); }
+.sent { margin-top: 0.75rem; font-size: 0.85rem; }
+.sent code { display: block; margin-top: 0.3rem; background: var(--off); border: 1px solid var(--mist); border-radius: 8px;
+  padding: 0.6rem 0.8rem; white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.82rem; }
+.hint { font-size: 0.8rem; color: var(--slate); margin-top: 0.75rem; }
+
+/* Compare */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.compare .card h3 { font-size: 1rem; color: var(--deep); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+.compare .off { border: 1px dashed var(--red); }
+.compare ul { padding-left: 1.1rem; color: var(--slate); font-size: 0.9rem; }
+.compare li { margin-bottom: 0.35rem; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+/* Run */
+pre.cmd { background: var(--night); color: #e6e6f5; border-radius: var(--radius); padding: 1.25rem; overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85rem; line-height: 1.7; margin-top: 1.5rem; }
+pre.cmd .c { color: var(--lav); }
+
+footer { margin-top: 5rem; background: #fff; border-top: 1px solid var(--mist); }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-top: 1.25rem; padding-bottom: 1.25rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--slate); }
+footer img { height: 40px; display: block; }
+footer .c2 { display: flex; align-items: center; gap: 0.6rem; }
+footer .c2 span { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
+@media (max-width: 900px) {
+  .layers { grid-template-columns: 1fr 1fr; }
+  .policies { grid-template-columns: 1fr 1fr; }
+  .play, .compare { grid-template-columns: 1fr; }
+  nav .links { display: none; }
+}
+@media (max-width: 560px) {
+  .layers, .policies { grid-template-columns: 1fr; }
+  .hero { padding: 3rem 0 5.5rem; }
+  .shot { margin-top: -3.5rem; }
+  .collab img { height: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <img src="assets/wallbridge-logo.png" alt="WallBridge AI">
+    <div class="links">
+      <a href="#how">How it works</a>
+      <a href="#policies">Policies</a>
+      <a href="#try">Try it</a>
+      <a href="#run">Run locally</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Live demo · Responsible AI in Healthcare</span>
+    <h1>Guardrails that put the safeguard in the same hand as the capability.</h1>
+    <p class="lead">A clinical AI assistant that checks every request against healthcare policies before a model answers. It's built as a live demo for the talk <em>Navigating AI Research Risk and Responsibility in Healthcare</em>.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#try">Try the policy engine</a>
+      <a class="btn btn-ghost" href="https://github.com/bayegaspard/LauchAthon-team15">View the source</a>
+    </div>
+    <div class="collab">
+      <span>In collaboration with</span>
+      <img src="assets/uhas-logo.png" alt="University of Health and Allied Sciences, Ho">
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <figure class="shot">
+    <img src="assets/demo-screenshot.jpg" alt="The demo app: demo scenarios on the left, the chat in the middle, and the guardrail decision with active policies on the right.">
+    <figcaption>The live app. Scenarios on the left, chat in the middle, and the guardrail decision and policies on the right.</figcaption>
+  </figure>
+
+  <section class="block" id="how">
+    <span class="eyebrow">How it works</span>
+    <h2>Three layers before the model, and a switch to remove them</h2>
+    <p class="intro">Risk enters at every stage, so the safeguard sits in front of the model rather than as one check at the end. Flip the guardrails off during the talk and the same request goes straight to the raw model.</p>
+    <div class="layers">
+      <div class="layer"><div class="num">1</div><h3>Policy engine</h3><p>Deterministic rules mapped to the four principles. They block, redact, or attach a required safeguard, and behave the same every time.</p></div>
+      <div class="layer"><div class="num">2</div><h3>NeMo self-check</h3><p>NVIDIA NeMo Guardrails asks a local Llama 3 model to judge anything the rules did not catch.</p></div>
+      <div class="layer"><div class="num">3</div><h3>Guided model</h3><p>Llama 3.1 answers with a clinical system prompt plus the safeguards the policy engine required.</p></div>
+      <div class="layer off"><div class="num">✕</div><h3>Guardrails off</h3><p>The raw model with no policies, redaction, or system prompt. It's useful for showing what changes.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="policies">
+    <span class="eyebrow">Policies</span>
+    <h2>Six policies, traced to the talk's principles</h2>
+    <p class="intro">Each policy names the principle it enforces, so the audience can follow a decision back to the slide that motivated it.</p>
+    <div class="policies" id="policy-grid"></div>
+  </section>
+
+  <section class="block" id="try">
+    <span class="eyebrow">Try it</span>
+    <h2>Run the policy engine in your browser</h2>
+    <p class="intro">This is the same deterministic layer the app uses, ported to JavaScript. Nothing leaves your browser. The model and the NeMo check run only in the local app.</p>
+    <div class="play">
+      <div class="card" id="scenario-list" aria-label="Demo scenarios"></div>
+      <div class="card">
+        <label class="lbl" for="msg">Your message</label>
+        <textarea id="msg" placeholder="Type a clinical or research question, or pick a scenario"></textarea>
+        <button class="run" id="run" type="button">Check against policies</button>
+        <div class="result" id="result" aria-live="polite" hidden></div>
+        <p class="hint">Use synthetic examples only. Never paste real patient data into any demo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="eyebrow">On versus off</span>
+    <h2>What the audience sees in the live demo</h2>
+    <div class="compare">
+      <div class="card">
+        <h3><span class="dot" style="background:var(--ok)"></span>Guardrails on</h3>
+        <ul>
+          <li>Identifiers are stripped before the model reads a case note.</li>
+          <li>Re-identification, hidden subgroup failures, and auto-signed notes are refused, and the model is never called.</li>
+          <li>Dosing answers are labeled decision support that needs clinician verification.</li>
+          <li>Deployment questions come back with an external-validation checklist.</li>
+        </ul>
+      </div>
+      <div class="card off">
+        <h3><span class="dot" style="background:var(--red)"></span>Guardrails off</h3>
+        <ul>
+          <li>The raw model repeats the patient's name, MRN, date of birth, and SSN back.</li>
+          <li>It designs a cost-as-need triage score without a word about bias.</li>
+          <li>It still refuses some obviously harmful requests on its own. That shows why policy can't be left to the model alone.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="run">
+    <span class="eyebrow">Run locally</span>
+    <h2>Run the full demo with a local model</h2>
+    <p class="intro">The full app needs Python and <a href="https://ollama.com">Ollama</a>. It runs entirely on your machine.</p>
+<pre class="cmd"><span class="c"># 1. Get the code and install dependencies</span>
+git clone https://github.com/bayegaspard/LauchAthon-team15.git
+cd LauchAthon-team15
+pip install flask ollama nemoguardrails
+
+<span class="c"># 2. Pull the models (about 10 GB)</span>
+ollama pull llama3       <span class="c"># guardrail self-check</span>
+ollama pull llama3.1     <span class="c"># assistant</span>
+
+<span class="c"># 3. Start the app, then open http://127.0.0.1:5050</span>
+cd flask_app
+python3 app.py</pre>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>Demo for <em>Navigating AI Research Risk and Responsibility in Healthcare</em>.</p>
+    <div class="c2"><span>In collaboration with</span><img src="assets/uhas-logo.png" alt="University of Health and Allied Sciences, Ho"></div>
+  </div>
+</footer>
+
+<script src="assets/policy-engine.js"></script>
+<script>
+const LABEL = { allowed: "Allowed", safeguarded: "Safeguarded", redacted: "Redacted", blocked: "Blocked" };
+function el(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; }
+
+const grid = document.getElementById("policy-grid");
+POLICIES.forEach((p) => {
+  const c = el("div", "policy"); c.id = "pol-" + p.id;
+  const top = el("div", "top"); top.append(el("span", "id", p.id), el("span", "pr", p.principle));
+  c.append(top, el("h3", "", p.title), el("p", "", p.summary), el("span", "pill pill-id act", p.action));
+  grid.append(c);
+});
+
+const list = document.getElementById("scenario-list");
+const msg = document.getElementById("msg");
+SCENARIOS.forEach((g) => {
+  const box = el("div", "scen-group"); box.append(el("h4", "", g.group));
+  g.items.forEach((s) => {
+    const b = el("button", "scen"); b.type = "button";
+    b.append(el("span", "", s.label), el("span", "pill pill-" + s.expect, s.expect));
+    b.addEventListener("click", () => { msg.value = s.prompt; run(); });
+    box.append(b);
+  });
+  list.append(box);
+});
+
+function run() {
+  const text = msg.value.trim();
+  const out = document.getElementById("result");
+  if (!text) return;
+  const d = evaluate(text);
+  out.replaceChildren(); out.hidden = false;
+  const st = el("div", "status");
+  st.append(el("span", "pill pill-" + d.status, LABEL[d.status]));
+  st.append(el("span", "", d.status === "blocked" ? "Refused. The model is never called." :
+    d.status === "allowed" ? "No policy fired. The message goes on to the NeMo check and the model." :
+    "The model is called, with the safeguards below."));
+  out.append(st);
+  d.policies.forEach((p) => { const r = el("p", "reason"); r.append(el("strong", "", p.id + " · " + p.title + ". "), document.createTextNode(p.reason)); out.append(r); });
+  if (d.redactions.length) { const s = el("div", "sent", "What the model receives:"); s.append(el("code", "", d.message)); out.append(s); }
+  document.querySelectorAll(".policy").forEach((n) => n.classList.remove("fired"));
+  d.policies.forEach((p) => document.getElementById("pol-" + p.id)?.classList.add("fired"));
+}
+document.getElementById("run").addEventListener("click", run);
+msg.value = SCENARIOS[3].items[0].prompt; run();
+msg.addEventListener("keydown", (e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) run(); });
+</script>
+</body>
+</html>
